@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
   "contractName": "IDLT",
-  "sourceName": "contracts/erc3643/token-dlt/dlt/interfaces/IDLT.sol",
+  "sourceName": "contracts/erc6960/interfaces/IDLT.sol",
   "abi": [
     {
       "anonymous": false,
