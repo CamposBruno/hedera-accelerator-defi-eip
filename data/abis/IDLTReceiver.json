@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
   "contractName": "IDLTReceiver",
-  "sourceName": "contracts/erc3643/token-dlt/dlt/interfaces/IDLTReceiver.sol",
+  "sourceName": "contracts/erc6960/interfaces/IDLTReceiver.sol",
   "abi": [
     {
       "inputs": [

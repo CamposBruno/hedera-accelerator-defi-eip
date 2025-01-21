@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
   "contractName": "DLTEnumerable",
-  "sourceName": "contracts/erc3643/token-dlt/dlt/extensions/DLTEnumerable.sol",
+  "sourceName": "contracts/erc6960/extensions/DLTEnumerable.sol",
   "abi": [
     {
       "anonymous": false,
@@ -311,6 +311,19 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -503,6 +516,19 @@
           "internalType": "uint256",
           "name": "totalBalance",
           "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
         }
       ],
       "stateMutability": "view",
