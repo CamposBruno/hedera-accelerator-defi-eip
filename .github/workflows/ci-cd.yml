@@ -1,14 +1,14 @@
-name: Export ABI workflow
-on:
-    push:
-      branches:
-        - main
+name: CI/CD Pipeline
 
+on:
+  pull_request:
+    branches:
+      - main
 jobs:
-  exports-abi:
-    name: "Export ABI's"
+  build:
+    name: "CI/CD"
     runs-on: ubuntu-latest
-    environment: testnet #change to mainnet before production
+    environment: testnet
 
     strategy:
       matrix:
@@ -32,26 +32,38 @@ jobs:
         uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
           node-version: ${{ matrix.node-version }}
-
+    
       - name: Install Yarn
         run: npm install --global yarn
+
+      - name: Cache Yarn Dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Install Dependencies
         run: yarn install
 
       - name: Compile
         run: yarn run compile
-      
+
+      - name: Run Tests
+        run: yarn run test
+        
       - name: Extract and publish ABIs
         run: |
             mkdir -p data/abis
             find ./artifacts/contracts -type f -name "*.json" ! -name "*.dbg.json" -exec cp {} data/abis/ \;
             
-      - name: Upload ABI
+      - name: Commit ABI
         uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5.0.1
         with:
           commit_options: '--no-verify --signoff'
           push_options: '--force'
           file_pattern: './data/abis/*.json'
-
-    
+        
