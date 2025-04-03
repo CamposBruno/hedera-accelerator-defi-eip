@@ -644,7 +644,7 @@ describe("BasicVault", function () {
     });
 
     describe("flow tests", function () {
-        it.only("two people, two withdraw, add reward, all claim", async function () {
+        it("two people, two withdraw, add reward, all claim", async function () {
             const { hederaVault, owner, testAccount, stakingToken, rewardToken, client } = await deployFixture();
             const amountToWithdraw = 100;
             const amountToStake = 112412;

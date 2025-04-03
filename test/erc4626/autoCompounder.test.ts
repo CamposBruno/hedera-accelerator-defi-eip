@@ -326,7 +326,7 @@ describe("AutoCompounder", function () {
     });
 
     describe("claim", function () {
-        it.only("Should claim reward and reinvest", async function () {
+        it("Should claim reward and reinvest", async function () {
             const { autoCompounder, vault, stakingToken, rewardToken, owner } = await deployFixture(VaultType.Basic);
             const amountToDeposit = 112412;
             const rewardAmount = ethers.parseUnits("5000000", 18);
