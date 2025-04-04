@@ -62,6 +62,17 @@ jobs:
         run: |
             mkdir -p data/abis
             find ./artifacts/contracts -type f -name "*.json" ! -name "*.dbg.json" -exec cp {} data/abis/ \;
+
+      # Setup git and GPG
+      - name: Import GPG Key
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 --decode > private.key
+          gpg --batch --import private.key
+          rm private.key
+          git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}
+          git config --global commit.gpgsign true
+          git config --global user.email "bot@gashgraph.com"
+          git config --global user.name "Bot"
             
       - name: Commit ABI
         uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5.0.1
