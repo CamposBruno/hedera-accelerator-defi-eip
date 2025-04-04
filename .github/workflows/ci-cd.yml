@@ -78,6 +78,8 @@ jobs:
             
       - name: Commit and push ABI changes
         run: |
+          git fetch origin ${{ github.head_ref }}
+          git checkout ${{ github.head_ref }}
           git add ./data/abis/*.json
           git diff-index --quiet HEAD || git commit -S -m "Auto-commit ABIs [ci skip]" --author="Bot <bot@gashgraph.com>"
           git push origin HEAD:${{ github.head_ref }}
