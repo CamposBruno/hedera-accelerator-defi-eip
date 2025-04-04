@@ -80,4 +80,8 @@ jobs:
           commit_options: '--no-verify --signoff'
           push_options: '--force'
           file_pattern: './data/abis/*.json'
+          commit_user_email: 'bot@gashgraph.com'
+          commit_user_name: 'Bot'
+          commit_author: 'Bot <bot@gashgraph.com>'
+          
         
