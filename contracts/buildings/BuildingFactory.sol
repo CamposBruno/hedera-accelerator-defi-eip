@@ -22,6 +22,9 @@ import {ITreasury} from "../treasury/interfaces/ITreasury.sol";
  * @author Hashgraph 
  */
 contract BuildingFactory is BuildingFactoryStorage, Initializable {
+    address public foo;
+    uint256 public bar;
+
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
