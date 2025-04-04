@@ -73,15 +73,15 @@ jobs:
           rm private.key
           git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}
           git config --global commit.gpgsign true
-          git config --global user.email "bot@gashgraph.com"
-          git config --global user.name "Bot"
+          git config --global user.email "bhncampos@gmail.com"
+          git config --global user.name "Bruno Campos"
             
       - name: Commit and push ABI changes
         run: |
           git fetch origin ${{ github.head_ref }}
           git checkout ${{ github.head_ref }}
           git add ./data/abis/*.json
-          git diff-index --quiet HEAD || git commit -S -m "Auto-commit ABIs [ci skip]" --author="Bot <bot@gashgraph.com>"
+          git diff-index --quiet HEAD || git commit -S -m "Auto-commit ABIs [ci skip]"
           git push origin HEAD:${{ github.head_ref }}
       
           
