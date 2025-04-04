@@ -74,14 +74,11 @@ jobs:
           git config --global user.email "bot@gashgraph.com"
           git config --global user.name "Bot"
             
-      - name: Commit ABI
-        uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5.0.1
-        with:
-          commit_options: '--no-verify --signoff'
-          push_options: '--force'
-          file_pattern: './data/abis/*.json'
-          commit_user_email: 'bot@gashgraph.com'
-          commit_user_name: 'Bot'
-          commit_author: 'Bot <bot@gashgraph.com>'
+      - name: Commit and push ABI changes
+        run: |
+          git add ./data/abis/*.json
+          git diff-index --quiet HEAD || git commit -S -m "Auto-commit ABIs [ci skip]" --author="Bot <bot@gashgraph.com>"
+          git push origin HEAD:${{ github.head_ref }}
+      
           
         
