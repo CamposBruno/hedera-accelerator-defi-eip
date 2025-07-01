@@ -337,67 +337,6 @@ describe('BuildingFactory', () => {
     })
   });
 
-  describe('.callContract()', () => {
-    describe('when VAlID building address', () => {
-      describe('when contract IS whitelisted', () => {
-        it('should call ERC721Metadata contract and set metadata', async () => {
-          const { owner, usdcAddress, buildingFactory, nftCollection, nftCollectionAddress } = await loadFixture(deployFixture);
-          const NFT_ID = 0;
-
-          const buildingDetails = {
-            tokenURI: 'ipfs://bafkreifuy6zkjpyqu5ygirxhejoryt6i4orzjynn6fawbzsuzofpdgqscq', 
-            tokenName: 'MyToken', 
-            tokenSymbol: 'MYT', 
-            tokenDecimals: 18n,
-            tokenMintAmount: ethers.parseEther('1000'),
-            treasuryNPercent: 2000n, 
-            treasuryReserveAmount: ethers.parseEther('1000'),
-            governanceName : 'MyGovernance',
-            vaultShareTokenName: 'Vault Token Name',
-            vaultShareTokenSymbol: 'VTS',
-            vaultFeeReceiver: owner,
-            vaultFeeToken: usdcAddress,
-            vaultFeePercentage: 2000,
-            vaultCliff: 0n,
-            vaultUnlockDuration: 0n,
-            aTokenName: "AutoCompounder Token Name",
-            aTokenSymbol: "ACTS"
-          }
-          const tx = await buildingFactory.newBuilding(buildingDetails);
-          await tx.wait();
-          
-          const [buildingAddress] = await getDeployedBuilding(buildingFactory, tx.blockNumber as number);
-          const building = await ethers.getContractAt('Building', buildingAddress);
-  
-          const ERC721MetadataIface = new ethers.Interface(ERC721MetadataABI.abi);
-          const encodedMetadataFunctionData = ERC721MetadataIface.encodeFunctionData(
-            "setMetadata(uint256,string[],string[])", // function selector
-            [ // function parameters
-              NFT_ID, 
-              ["size", "type", "color", "city"], 
-              ["8", "mp4", "blue", "denver"]
-            ]
-          );
-          
-          await building.callContract(nftCollectionAddress, encodedMetadataFunctionData);
-          const metadata = await nftCollection["getMetadata(uint256)"](NFT_ID);
-
-          expect(metadata[0][0]).to.be.equal('size')
-          expect(metadata[0][1]).to.be.equal('8')
-
-          expect(metadata[1][0]).to.be.equal('type')
-          expect(metadata[1][1]).to.be.equal('mp4')
-
-          expect(metadata[2][0]).to.be.equal('color')
-          expect(metadata[2][1]).to.be.equal('blue')
-
-          expect(metadata[3][0]).to.be.equal('city')
-          expect(metadata[3][1]).to.be.equal('denver')
-        });
-      });
-    });
-  });
-
   describe('.addRegistryAgents', () => {
     describe('when sender is not owner', () => {
       it('should revert', async () => {

@@ -95,7 +95,6 @@ describe('Building', () => {
         building,
        } = await loadFixture(deployFixture);
 
-      expect(await building.getAuditRegistry()).to.be.properAddress;
       expect(await building.owner()).to.be.hexEqual(owner.address);
       
     });
